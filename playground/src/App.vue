@@ -1,5 +1,5 @@
 <script>
-import BaseCounter from "./components/base-counter.vue";
+import BaseCounter from "./components/BaseCounter.vue";
 
 export default {
   components: {
