@@ -1,5 +1,10 @@
 <script>
+import BaseCounter from "./components/BaseCounter.vue";
+
 export default {
+  components: {
+    BaseCounter,
+  },
   data() {
     return {
       message: "Hello it works",
@@ -36,6 +41,7 @@ export default {
 </script>
 
 <template>
+  <BaseCounter />
   <hr />
   <p v-if="message.length % 2 === 0">Even: {{ message.toUpperCase() }}</p>
   <p v-else>Odd: {{ message }}</p>
