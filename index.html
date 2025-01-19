@@ -4,42 +4,52 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Avatar: The Last Airbender</title>
+    <title>The Serpent Queen</title>
   </head>
   <body>
     <div id="app">
       <h2>Statistics</h2>
       <ul>
-        <li v-for="(stat, type) in benderStatistics">{{ type }}: {{ stat }}</li>
+        <li v-for="(stat, type) in characterStatistics">
+          {{ type }}: {{ stat }}
+        </li>
+        <li v-for="(percentage, type) in royaltyServantPercentages">
+          {{ type }}: {{ (percentage * 100).toFixed(2) }}%
+        </li>
       </ul>
+
       <h2>Characters</h2>
       <p v-if="characterList.length === 0">There are no characters</p>
-      <ul v-else-if="characterList.length % 2 === 0">
+      <ul v-else>
         <li v-for="character in characterList">
           <p>{{ character.name }}</p>
           <button @click="favoriteCharacter(character)">⭐ Favorite</button>
         </li>
       </ul>
+
       <h2>Favorite Characters</h2>
       <ul v-if="favoriteList.length > 0">
-        <li v-for="character in favoriteList">{{ character }}</li>
+        <li v-for="character in favoriteList">
+          {{ character }}
+        </li>
       </ul>
       <p v-else>No favorite characters yet!</p>
+
       <h2>New Character</h2>
-      <pre>{{ newCharacter }}</pre>
-      <label for="character-name">Name</label>
-      <input
-        type="text"
-        v-model="newCharacter.name"
-        @keyup.enter="addNewCharacter"
-      />
+      <p> 
+        {{ newCharacter }}
+      </p>
+      <label for = "character-name">Name</label>
+      <input type="text" 
+             v-model="newCharacter.name"
+             @keyup.enter ="addNewCharacter" />
+
       <p>
         <span v-for="(character, index) in characterList"
           >{{ character.name }}{{ index === characterList.length - 1 ? '' : ', '
           }}
         </span>
       </p>
-      <p v-else>There are odd characters!</p>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -48,56 +58,68 @@
         data: () => ({
           newCharacter: {
             name: '',
-            element: []
+            status: []
           },
           characterList: [
             {
-              name: 'Aang',
-              element: ['Air', 'Earth', 'Water', 'Fire']
+              name: "Catherine de Medici",
+              status: ['Royalty']
             },
             {
-              name: 'Zuko',
-              element: ['Fire']
+              name: "Rahima",
+              status: ['Servant']
             },
             {
-              name: 'Toph',
-              element: ['Earth']
+              name: "Anjou",
+              status: ['Royalty']
             },
             {
-              name: 'Katara',
-              element: ['Water']
+              name: "Antoine de Borboun",
+              status: ['Royalty']
             }
           ],
-          favoriteList: []
+          favoriteList: [
+
+          ]
         }),
         computed: {
-          benderStatistics() {
-            const elements = ['Air', 'Earth', 'Fire', 'Water']
-            const statistics = {
-              Air: 0,
-              Earth: 0,
-              Water: 0,
-              Fire: 0
-            }
-
+          characterStatistics(){
+            const statuses = ['Royalty', 'Servant']
+            const statistics = {Royalty: 0,
+                                Servant: 0}
             this.characterList.forEach(character => {
-              elements.forEach(element => {
-                if (character.element.indexOf(element) > -1) {
-                  statistics[element] += 1
+              statuses.forEach(status => {
+                if(character.status.indexOf(status) > -1){
+                  statistics[status] += 1
                 }
               })
             })
-
             return statistics
+          },
+          royaltyServantPercentages(){
+            const royaltiesNum = Number(this.characterStatistics.Royalty)
+            const servantsNum = Number(this.characterStatistics.Servant)
+            const totalCharacterNum = Number(this.characterList.length)
+
+            const royaltyPercentage = royaltiesNum / totalCharacterNum
+            const servantsPercentage = servantsNum / totalCharacterNum
+
+            console.log(`Royalty Percentage: ${royaltyPercentage}, Servant Percentage: ${servantsPercentage}`);
+
+            const royaltyAndServantsPercentages = {
+              Royal_Percentage: royaltyPercentage,
+              Servant_Percentage: servantsPercentage
+            }
+            return royaltyAndServantsPercentages
           }
         },
-        methods: {
-          addNewCharacter() {
-            this.characterList.push(this.newCharacter)
-            this.newCharacter = { name: '' }
-          },
-          favoriteCharacter(character) {
+        methods:{
+          favoriteCharacter(character){
             this.favoriteList.push(character)
+          },
+          addNewCharacter(){
+            this.characterList.push(this.newCharacter)
+            this.newCharacter = {name: ''}
           }
         }
       }).mount('#app')
