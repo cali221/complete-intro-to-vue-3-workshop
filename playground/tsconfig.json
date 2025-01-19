@@ -7,9 +7,9 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "allowJs": true
+    "allowJs": true,
+    "verbatimModuleSyntax": true
   },
-
   "references": [
     {
       "path": "./tsconfig.config.json"
