@@ -1,5 +1,12 @@
 <script>
+import BenderStatistics from "./components/BenderStatistics.vue";
+import CharacterCard from "./components/CharacterCard.vue";
+
 export default {
+  components: {
+    BenderStatistics,
+    CharacterCard
+  },
   data: () => ({
     newCharacter: {
       name: "",
@@ -25,58 +32,28 @@ export default {
     ],
     favoriteList: [],
   }),
-  computed: {
-    benderStatistics() {
-      const elements = ["Air", "Earth", "Fire", "Water"];
-      const statistics = {
-        Air: 0,
-        Earth: 0,
-        Water: 0,
-        Fire: 0,
-      };
-
-      this.characterList.forEach((character) => {
-        elements.forEach((element) => {
-          if (character.element.indexOf(element) > -1) {
-            statistics[element] += 1;
-          }
-        });
-      });
-
-      return statistics;
-    },
-  },
   methods: {
     addNewCharacter() {
       this.characterList.push(this.newCharacter);
       this.newCharacter = { name: "" };
     },
-    favoriteCharacter(character) {
-      this.favoriteList.push(character);
-    },
+    addFavoriteCharacter(payload){
+      this.favoriteList.push(payload)
+    }
   },
 };
 </script>
 
 <template>
-  <h2>Statistics</h2>
-  <ul>
-    <li
-      v-for="(stat, type) in benderStatistics"
-      :key="`bender-${stat}-${type}`"
-    >
-      {{ type }}: {{ stat * 2 }}
-    </li>
-  </ul>
+  <BenderStatistics :characters="characterList" />
   <h2>Characters</h2>
   <p v-if="characterList.length === 0">There are no characters</p>
   <ul v-else-if="characterList.length % 2 === 0">
-    <li
-      v-for="(character, index) in characterList"
-      :key="`even-character-${index}`"
-    >
-      <p>{{ character.name }}</p>
-      <button @click="favoriteCharacter(character)">⭐ Favorite</button>
+    <li v-for="(character, index) in characterList"
+        :key="`even-character-${index}`">
+
+      <CharacterCard :character="character" @favorite="addFavoriteCharacter"/>
+    
     </li>
   </ul>
   <p v-else>There are odd characters!</p>
