@@ -1,11 +1,16 @@
 <script>
 import UserCard from "./components/user-card.vue";
 import BaseCounter from "./components/base-counter.vue";
+import BaseButton from "./components/base-button.vue";
+import baseLayout from "./components/base-layout.vue";
+import BaseLayout from "./components/base-layout.vue";
 
 export default {
   components: {
     BaseCounter,
     UserCard,
+    BaseButton,
+    BaseLayout
   },
   data() {
     return {
@@ -62,8 +67,27 @@ export default {
 </script>
 
 <template>
-  <UserCard :user="refinedUserData" @change-name="changeName" />
-  <BaseCounter />
+  <BaseLayout>
+    <!-- same as <template v-slot:sidebar> -->
+    <template #sidebar>
+      Aside
+    </template>
+
+    <template v-slot:main>
+      <UserCard :user="refinedUserData" 
+                 @change-name="changeName" />
+    </template>
+
+    <template v-slot:footer>
+      <BaseCounter />
+    </template>
+  </BaseLayout>
+
+  <BaseButton :left="true">
+    <!-- defaults to 'Submit' (left is false) -->
+
+  </BaseButton>
+  
   <hr />
   <p v-if="message.length % 2 === 0">Even: {{ message.toUpperCase() }}</p>
   <p v-else>Odd: {{ message }}</p>
@@ -78,3 +102,17 @@ export default {
     </li>
   </ul>
 </template>
+
+<style>
+.sidebar{
+  border: 2px solid red;
+}
+
+.main{
+  border: 2px solid green;
+}
+
+.footer{
+  border: 2px solid blue;
+}
+</style>
