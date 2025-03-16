@@ -2,12 +2,13 @@
 import UserCard from "./components/user-card.vue";
 import BaseCounter from "./components/base-counter.vue";
 import BaseButton from "./components/base-button.vue";
-import baseLayout from "./components/base-layout.vue";
 import BaseLayout from "./components/base-layout.vue";
 
 export default {
   components: {
+    BaseButton,
     BaseCounter,
+    BaseLayout,
     UserCard,
     BaseButton,
     BaseLayout
