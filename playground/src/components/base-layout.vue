@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper">
-    <main class="main">
-      <slot name="main" />
-    </main>
     <aside class="sidebar">
       <slot name="sidebar" />
     </aside>
+    <main class="main">
+      <slot name="main" />
+    </main>
   </div>
   <footer class="footer">
     <slot name="footer" />
