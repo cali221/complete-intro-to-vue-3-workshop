@@ -1,14 +1,16 @@
 <script>
 import HomePage from "./components/HomePage.vue";
 import LoginPage from "./components/LoginPage.vue";
+import UsersPage from "./components/UsersPage.vue";
 
 export default {
   components: {
     HomePage,
     LoginPage,
+    UsersPage,
   },
   data: () => ({
-    currentPage: "Home",
+    currentPage: "Users",
   }),
   methods: {
     showHomePage() {
@@ -16,6 +18,9 @@ export default {
     },
     showLoginPage() {
       this.currentPage = "Login";
+    },
+    showUsersPage() {
+      this.currentPage = "Users";
     },
   },
 };
@@ -29,9 +34,11 @@ export default {
     <nav class="nav">
       <a href="#" @click.prevent="showHomePage">Home</a>
       <a href="#" @click.prevent="showLoginPage">Login</a>
+      <a href="#" @click.prevent="showUsersPage">Users</a>
     </nav>
   </header>
   <HomePage v-if="currentPage === 'Home'" />
+  <UsersPage v-else-if="currentPage === 'Users'" />
   <LoginPage v-else />
 </template>
 
