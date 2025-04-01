@@ -37,9 +37,15 @@ export default {
       <a href="#" @click.prevent="showUsersPage">Users</a>
     </nav>
   </header>
-  <HomePage v-if="currentPage === 'Home'" />
-  <UsersPage v-else-if="currentPage === 'Users'" />
-  <LoginPage v-else />
+
+  <Suspense>
+    <compoent :is="renderPage" :key="renderPage" />
+
+    <template v-slot:fallback>
+      Data is loading...
+    </template>
+  </Suspense>
+ 
 </template>
 
 <style>
