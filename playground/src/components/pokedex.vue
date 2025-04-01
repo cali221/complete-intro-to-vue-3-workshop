@@ -1,32 +1,37 @@
 <script setup>
-import BaseButton from "./base-button.vue";
 // https://pokeapi.co/api/v2/pokemon?limit=151
 
-import {computed, defineProps, defineEmits, ref, reactive} from "vue";
-const emits = defineEmits (['change-region'])
+import BaseButton from "./base-button.vue"
+import {computed, ref, reactive, onBeforeUnmount} from "vue";
 
+const emits = defineEmits(["change-region"]);
 const props = defineProps({
-    region: {
-      type: String,
-    },
-  })
-
-  const regionName = ref("Kanto");
-
-  const state = reactive({
-    elementType: 'lightning'
-  })
-
-  const elementTypeAllCaps = computed(() => {
-    return state.elementType.toUpperCase() + props.region;
-  })
-
-  const pokedex = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151').then((response) => response.json());
-
-  const changeRegionName = () => {
-    regionName.value = "Hoenn";
-    emits('change-region');
+  region: {
+    type: String,
   }
+});
+
+const regionName = ref("Kanto");
+
+const state = reactive({
+  elementType: 'lightning'
+})
+
+const elementTypeAllCaps = computed(() => {
+  return state.elementType.toUpperCase() + props.region;
+})
+
+const pokedex = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151').then((response) => response.json());
+
+const changeRegionName = () => {
+  regionName.value = "Hoenn";
+  emits("change-region");
+};
+
+onBeforeUnmount(() => {
+  console.log("Do this thing!")
+});
+
 </script>
 
 <template>
