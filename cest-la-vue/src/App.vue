@@ -10,8 +10,23 @@ export default {
     UsersPage,
   },
   data: () => ({
-    currentPage: "Users",
+    currentPage: "Users", // Initially set to Users page
   }),
+  computed: {
+    // Dynamically determine the component to render based on currentPage
+    renderPage() {
+      switch (this.currentPage) {
+        case "Home":
+          return HomePage;
+        case "Login":
+          return LoginPage;
+        case "Users":
+          return UsersPage;
+        default:
+          return HomePage; // Default to Home page if no match
+      }
+    },
+  },
   methods: {
     showHomePage() {
       this.currentPage = "Home";
@@ -39,13 +54,13 @@ export default {
   </header>
 
   <Suspense>
-    <compoent :is="renderPage" :key="renderPage" />
+    <!-- Dynamically load the page component -->
+    <component :is="renderPage" :key="currentPage" />
 
     <template v-slot:fallback>
       Data is loading...
     </template>
   </Suspense>
- 
 </template>
 
 <style>
