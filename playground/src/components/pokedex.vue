@@ -1,49 +1,43 @@
-<script>
+<script setup>
 // https://pokeapi.co/api/v2/pokemon?limit=151
 
-import {computed, ref, reactive} from "vue";
+import BaseButton from "./base-button.vue"
+import {computed, ref, reactive, onBeforeUnmount} from "vue";
 
-export default{
-  async setup(){
-    const regionName = ref("Kanto");
+const emits = defineEmits(["change-region"]);
+const props = defineProps({
+  region: {
+    type: String,
+  }
+});
 
-    const state = reactive({
-      elementType: 'lightning'
-    })
+const regionName = ref("Kanto");
 
-    const elementTypeAllCaps = computed(() => {
-      return state.elementType.toUpperCase();
-    })
+const state = reactive({
+  elementType: 'lightning'
+})
 
-    const pokedex = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151').then((response) => response.json());
+const elementTypeAllCaps = computed(() => {
+  return state.elementType.toUpperCase() + props.region;
+})
 
-    return{
-      regionName,
-      elementTypeAllCaps,
-      pokedex
-    };
-  },
-  computed: {
-    regionNameLowerCase(){
-      return this.regionName.toLowerCase()
-    }
-  },
-  methods: {
-    changeRegionName(){
-      this.regionName = 'Hoenn'
-    }
-  },
-  created(){
-    console.log(this.regionName);
-    console.log(this.pokedex);
-  },
-}
+const pokedex = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151').then((response) => response.json());
+
+const changeRegionName = () => {
+  regionName.value = "Hoenn";
+  emits("change-region");
+};
+
+onBeforeUnmount(() => {
+  console.log("Do this thing!")
+});
+
 </script>
 
 <template>
     <h2>{{ regionName }}</h2>
+    <BaseButton />
     <h3>{{ elementTypeAllCaps }}</h3>
-    <h3>{{ regionNameLowerCase }}</h3>
     <button @click="changeRegionName">Change Region Name</button>
     <pre>{{ pokedex }}</pre>
 </template>
