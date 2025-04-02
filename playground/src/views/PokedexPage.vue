@@ -1,7 +1,7 @@
-<script setup>
+<!-- <script setup>
 // https://pokeapi.co/api/v2/pokemon?limit=151
 
-import BaseButton from "./base-button.vue"
+import BaseButton from "../components/base-button.vue"
 import {computed, ref, reactive, onBeforeUnmount} from "vue";
 
 const emits = defineEmits(["change-region"]);
@@ -40,4 +40,14 @@ onBeforeUnmount(() => {
     <h3>{{ elementTypeAllCaps }}</h3>
     <button @click="changeRegionName">Change Region Name</button>
     <pre>{{ pokedex }}</pre>
+</template> -->
+
+<script setup>
+</script>
+
+<template>
+  <h1>Pokedex</h1>
 </template>
+
+<style>
+</style>
