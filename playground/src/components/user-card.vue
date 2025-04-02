@@ -25,9 +25,15 @@ export default{
     <h2>New Counter</h2>
     <p>Global Count: {{ countStore.globalCount }}</p>
     <p>Local Count: {{ countStore.localCount }}</p>
-    <button @click="countStore.incrementGlobalCount">Global</button>
-    <button @click="countStore.increcmentLocalCount">Local</button>
+    <button :class="$style.button" @click="countStore.incrementGlobalCount">Global</button>
+    <button :class="$style.button" @click="countStore.increcmentLocalCount">Local</button>
     <hr />
     <p>Favorite Food: {{ user.food }}</p>
-    <button @click="$emit('change-name')">Change Name</button>
+    <button :class="$style.button" @click="$emit('change-name')">Change Name</button>
 </template>
+
+<style module>
+.button{
+  border: 10px solid green;
+}
+</style>
